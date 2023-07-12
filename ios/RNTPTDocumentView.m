@@ -287,9 +287,21 @@ NS_ASSUME_NONNULL_END
 
 #pragma mark - DocumentViewController loading
 
+ - (void)clearUIPasteboard {
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    [pasteboard setString:@"Kopiranje besedila ni dovoljeno!"];
+ }
+
 - (void)loadViewController
 {
     if (!self.documentViewController && !self.tabbedDocumentViewController) {
+        PTToolManager *toolManager = self.documentViewController.toolManager;
+        NSNotificationCenter *center = NSNotificationCenter.defaultCenter;
+            [center addObserver:self
+                selector:@selector(clearUIPasteboard)
+                name:PTToolManagerDidCopyTextNotification
+                object:toolManager];
+                             
         if ([self isCollabEnabled]) {
             PTExternalAnnotManagerMode collabMode = e_ptadmin_undo_own;
 
