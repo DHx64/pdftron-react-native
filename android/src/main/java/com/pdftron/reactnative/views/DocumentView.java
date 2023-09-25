@@ -105,6 +105,7 @@ import com.pdftron.reactnative.utils.DocumentViewUtilsKt;
 import com.pdftron.reactnative.utils.DownloadFileCallback;
 import com.pdftron.reactnative.utils.ReactUtils;
 import com.pdftron.sdf.Obj;
+import com.pdftron.sdf.SDFDoc;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
@@ -3462,8 +3463,12 @@ public class DocumentView extends com.pdftron.pdf.controls.DocumentView2 {
 
             if (getPdfViewCtrlTabFragment() != null && getPdfViewCtrlTabFragment().getFile() != null) {
                 File file = getPdfViewCtrlTabFragment().getFile();
+                String filePath = getPdfViewCtrlTabFragment().getFilePath();
                 if (mIsBase64) {
                     try {
+                        getPdfDoc().lock();
+                        getPdfDoc().save(filePath, SDFDoc.SaveMode.REMOVE_UNUSED, null);
+                        getPdfDoc().unlock();
                         byte[] data = FileUtils.readFileToByteArray(file);
                         return Base64.encodeToString(data, Base64.DEFAULT);
                     } catch (Exception ex) {
