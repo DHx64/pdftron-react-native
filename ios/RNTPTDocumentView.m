@@ -5598,20 +5598,47 @@ NS_ASSUME_NONNULL_END
 }
 
 - (void)glassesButtonTapped:(id)sender {
-    [self.delegate onBottomTabItemPressed:self id:(@"glassesButton")];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(onBottomTabItemPressed:id:)]) {
+        [self.delegate onBottomTabItemPressed:self id:@"glassesButton"];
+    } else {
+        NSLog(@"Warning: delegate is nil or doesn't respond to onBottomTabItemPressed:id:");
+    }
 }
 
-- (void)verticalScollingButtonTapped:(id)sender {
-    [self.delegate onBottomTabItemPressed:self id:(@"verticalScrollingButton")];
+- (void)verticalScrollingButtonTapped:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(onBottomTabItemPressed:id:)]) {
+        [self.delegate onBottomTabItemPressed:self id:@"verticalScrollingButton"];
+    } else {
+        NSLog(@"Warning: delegate is nil or doesn't respond to onBottomTabItemPressed:id:");
+    }
 }
 
 - (void)timerButtonTapped:(id)sender {
-    [self.delegate onBottomTabItemPressed:self id:(@"timerButton")];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(onBottomTabItemPressed:id:)]) {
+        [self.delegate onBottomTabItemPressed:self id:@"timerButton"];
+    } else {
+        NSLog(@"Warning: delegate is nil or doesn't respond to onBottomTabItemPressed:id:");
+    }
 }
 
 - (UIBarButtonItem *)itemForButton:(NSString *)buttonString
                   inViewController:(PTDocumentBaseViewController *)documentViewController
 {
+    if (buttonString == nil || [buttonString isKindOfClass:[NSNull class]]) {
+        NSLog(@"Error: buttonString is nil or NSNull");
+        return nil;
+    }
+
+    if (![buttonString isKindOfClass:[NSString class]]) {
+        NSLog(@"Error: buttonString is not a NSString");
+        return nil;
+    }
+
+    if (documentViewController == nil) {
+        NSLog(@"Error: documentViewController is nil");
+        return nil;
+    }
+
     if ([buttonString isEqualToString:PTSearchButtonKey]) {
         return documentViewController.searchButtonItem;
     } else if ([buttonString isEqualToString:PTMoreItemsButtonKey]) {
@@ -5627,44 +5654,61 @@ NS_ASSUME_NONNULL_END
     } else if ([buttonString isEqualToString:PTViewControlsButtonKey]) {
         return documentViewController.settingsButtonItem;
     } else if ([buttonString isEqualToString:@"glassesButton"]) {
-        UIImage *img;
-        if (@available(iOS 13.0, *)) {
-            img = [UIImage systemImageNamed:@"eyeglasses"];
-        } else {
-            img = [UIImage imageNamed:@"glasses_icon"];
+        UIImage *img = [self safeImageForButtonString:buttonString];
+        if (img) {
+            return [[UIBarButtonItem alloc] initWithImage:img
+                                                    style:UIBarButtonItemStylePlain
+                                                   target:self
+                                                   action:@selector(glassesButtonTapped:)];
         }
-
-        return [[UIBarButtonItem alloc] initWithImage:img
-                                                style:UIBarButtonItemStylePlain
-                                               target:self
-                                               action:@selector(glassesButtonTapped:)];
     } else if ([buttonString isEqualToString:@"verticalScrollingButton"]) {
-        UIImage *img;
-        if (@available(iOS 13.0, *)) {
-            img = [UIImage systemImageNamed:@"arrow.up.and.down.text.horizontal"];
-        } else {
-            img = [UIImage imageNamed:@"glasses_icon"];
+        UIImage *img = [self safeImageForButtonString:buttonString];
+        if (img) {
+            return [[UIBarButtonItem alloc] initWithImage:img
+                                                    style:UIBarButtonItemStylePlain
+                                                   target:self
+                                                   action:@selector(verticalScrollingButtonTapped:)];
         }
-
-        return [[UIBarButtonItem alloc] initWithImage:img
-                                                style:UIBarButtonItemStylePlain
-                                               target:self
-                                               action:@selector(verticalScollingButtonTapped:)];
     } else if ([buttonString isEqualToString:@"timerButton"]) {
-        UIImage *img;
-        if (@available(iOS 13.0, *)) {
-            img = [UIImage systemImageNamed:@"timer"];
-        } else {
-            img = [UIImage imageNamed:@"glasses_icon"];
+        UIImage *img = [self safeImageForButtonString:buttonString];
+        if (img) {
+            return [[UIBarButtonItem alloc] initWithImage:img
+                                                    style:UIBarButtonItemStylePlain
+                                                   target:self
+                                                   action:@selector(timerButtonTapped:)];
         }
-
-        return [[UIBarButtonItem alloc] initWithImage:img
-                                                style:UIBarButtonItemStylePlain
-                                               target:self
-                                               action:@selector(timerButtonTapped:)];
     }
     
+    NSLog(@"Warning: Unknown button string: %@", buttonString);
     return nil;
+}
+
+// Helper method to safely get image for button
+- (UIImage *)safeImageForButtonString:(NSString *)buttonString {
+    UIImage *img;
+    if (@available(iOS 13.0, *)) {
+        NSString *imageName = [self systemImageNameForButtonString:buttonString];
+        img = [UIImage systemImageNamed:imageName];
+    } else {
+        img = [UIImage imageNamed:@"glasses_icon"];
+    }
+    
+    if (img == nil) {
+        NSLog(@"Error: Failed to load image for button %@", buttonString);
+    }
+    return img;
+}
+
+// Helper method to get system image name
+- (NSString *)systemImageNameForButtonString:(NSString *)buttonString {
+    if ([buttonString isEqualToString:@"glassesButton"]) {
+        return @"eyeglasses";
+    } else if ([buttonString isEqualToString:@"verticalScrollingButton"]) {
+        return @"arrow.up.and.down.text.horizontal";
+    } else if ([buttonString isEqualToString:@"timerButton"]) {
+        return @"timer";
+    }
+    return @"";
 }
 
 - (void)removeToolbarButtonItem:(UIBarButtonItem *)item

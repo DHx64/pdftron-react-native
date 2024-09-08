@@ -128,6 +128,10 @@ export default class App extends Component<Props> {
         ]}
         onBottomTabItemPressed={({id}) => {
           console.log('bt', id);
+          // this._viewer.setBackgroundColor({red: 0, green: 0, blue: 255}); // blue color
+          const whiteColor = {red: 200, green: 255, blue: 200};
+          const blackColor = {red: 0, green: 0, blue: 0};
+          this._viewer.setColorPostProcessColors(whiteColor, blackColor);
         }}
       />
     );
