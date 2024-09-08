@@ -33,6 +33,7 @@ public final class Constants {
     public static final String ON_TOOLBAR_BUTTON_PRESS = "onToolbarButtonPress";
 
     // Hygen Generated Event Listeners
+    public static final String ON_BOTTOM_TAB_ITEM_PRESSED = "onBottomTabItemPressed";
     public static final String ON_CURRENT_TOOLBAR_CHANGED = "onCurrentToolbarChanged";
 
     // BUTTONS
@@ -370,6 +371,7 @@ public final class Constants {
     public static final String KEY_CURRENT_TAB = "currentTab";
 
     // Hygen Generated Keys
+    public static final String KEY_ID = "id";
     public static final String KEY_TOOLBAR = "toolbar";
 
     // Color RGBA

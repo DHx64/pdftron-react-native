@@ -5598,9 +5598,7 @@ NS_ASSUME_NONNULL_END
 }
 
 - (void)glassesButtonTapped:(id)sender {
-    // Handle glasses button tap
-    NSLog(@"Glasses button tapped");
-    // Add your custom logic here
+    [self.delegate onBottomTabItemPressed:self id:(@"glassesButton")];
 }
 
 - (UIBarButtonItem *)itemForButton:(NSString *)buttonString

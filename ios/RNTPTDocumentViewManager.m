@@ -1006,6 +1006,16 @@ RCT_CUSTOM_VIEW_PROPERTY(signatureColors, NSArray, RNTPTDocumentView)
 }
 
 // Hygen Generated Event Listeners
+- (void)onBottomTabItemPressed:(RNTPTDocumentView *)sender id:(NSString *)id
+{
+    if (sender.onChange) {
+        sender.onChange(@{
+            @"onBottomTabItemPressed": @"onBottomTabItemPressed",
+            @"id": id,
+        });
+    }
+}
+
 - (void)currentToolbarChanged:(RNTPTDocumentView *)sender toolbar:(NSString *)toolbar
 {
     if (sender.onChange) {

@@ -122,6 +122,9 @@ export default class App extends Component<Props> {
         openOutlineList={true}
         bottomToolbarEnabled={true}
         bottomToolbar={[Config.Buttons.reflowButton, Config.Buttons.glasses]}
+        onBottomTabItemPressed={({id}) => {
+          console.log('bt', id);
+        }}
       />
     );
   }

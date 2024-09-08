@@ -391,6 +391,8 @@ static NSString * const PTSignaturesManager_signatureDirectory = @"PTSignaturesM
 - (void)toolbarButtonPressed:(RNTPTDocumentView *)sender withKey:(NSString *)itemKey;
 
 // Hygen Generated Event Listeners
+- (void)onBottomTabItemPressed:(RNTPTDocumentView *)sender id:(NSString *)id;
+
 - (void)currentToolbarChanged:(RNTPTDocumentView *)sender toolbar:(NSString *)toolbar;
 
 

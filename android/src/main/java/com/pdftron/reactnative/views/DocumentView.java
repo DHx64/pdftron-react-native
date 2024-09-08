@@ -3321,6 +3321,13 @@ public class DocumentView extends com.pdftron.pdf.controls.DocumentView2 {
     }
 
     // Hygen Generated Event Listeners
+    // uncomment and use to implement onBottomTabItemPressed
+    // WritableMap params = Arguments.createMap();
+    // params.putString(ON_BOTTOM_TAB_ITEM_PRESSED, ON_BOTTOM_TAB_ITEM_PRESSED);
+    // params.putString(KEY_ID, );
+
+    // onReceiveNativeEvent(params);
+
 
     public void importBookmarkJson(String bookmarkJson) throws PDFNetException {
         PDFViewCtrl pdfViewCtrl = getPdfViewCtrl();

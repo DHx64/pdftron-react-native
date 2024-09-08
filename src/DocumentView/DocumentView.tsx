@@ -165,6 +165,7 @@ const propTypes = {
   onToolbarButtonPress: func<(event: {id: string}) => void>(),
 
   // Hygen Generated Props
+  onBottomTabItemPressed: func<(event: { id: string }) => void>(),
   enableReadingModeQuickMenu: PropTypes.bool,
   forceAppTheme: oneOf<Config.ThemeOptions>(Config.ThemeOptions),
   signatureColors: PropTypes.arrayOf(PropTypes.exact({
@@ -433,6 +434,12 @@ export class DocumentView extends PureComponent<DocumentViewProps, any> {
         });
       }
     // Hygen Generated Event Listeners
+    } else if (event.nativeEvent.onBottomTabItemPressed) {
+      if (this.props.onBottomTabItemPressed) {
+        this.props.onBottomTabItemPressed({
+          'id': event.nativeEvent.id,
+        });
+      }
     } else if (event.nativeEvent.onCurrentToolbarChanged) {
       if (this.props.onCurrentToolbarChanged) {
         this.props.onCurrentToolbarChanged({
