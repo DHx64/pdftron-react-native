@@ -5601,6 +5601,14 @@ NS_ASSUME_NONNULL_END
     [self.delegate onBottomTabItemPressed:self id:(@"glassesButton")];
 }
 
+- (void)verticalScollingButtonTapped:(id)sender {
+    [self.delegate onBottomTabItemPressed:self id:(@"verticalScrollingButton")];
+}
+
+- (void)timerButtonTapped:(id)sender {
+    [self.delegate onBottomTabItemPressed:self id:(@"timerButton")];
+}
+
 - (UIBarButtonItem *)itemForButton:(NSString *)buttonString
                   inViewController:(PTDocumentBaseViewController *)documentViewController
 {
@@ -5619,19 +5627,43 @@ NS_ASSUME_NONNULL_END
     } else if ([buttonString isEqualToString:PTViewControlsButtonKey]) {
         return documentViewController.settingsButtonItem;
     } else if ([buttonString isEqualToString:@"glassesButton"]) {
-        UIImage *glassesImage;
-                if (@available(iOS 13.0, *)) {
-                    glassesImage = [UIImage systemImageNamed:@"eyeglasses"];
-                } else {
-                    glassesImage = [UIImage imageNamed:@"glasses_icon"];
-                }
-                
-                UIBarButtonItem *glassesButton = [[UIBarButtonItem alloc] initWithImage:glassesImage
-                                                                                  style:UIBarButtonItemStylePlain
-                                                                                 target:self
-                                                                                 action:@selector(glassesButtonTapped:)];
-                return glassesButton;
+        UIImage *img;
+        if (@available(iOS 13.0, *)) {
+            img = [UIImage systemImageNamed:@"eyeglasses"];
+        } else {
+            img = [UIImage imageNamed:@"glasses_icon"];
+        }
+
+        return [[UIBarButtonItem alloc] initWithImage:img
+                                                style:UIBarButtonItemStylePlain
+                                               target:self
+                                               action:@selector(glassesButtonTapped:)];
+    } else if ([buttonString isEqualToString:@"verticalScrollingButton"]) {
+        UIImage *img;
+        if (@available(iOS 13.0, *)) {
+            img = [UIImage systemImageNamed:@"arrow.up.and.down.text.horizontal"];
+        } else {
+            img = [UIImage imageNamed:@"glasses_icon"];
+        }
+
+        return [[UIBarButtonItem alloc] initWithImage:img
+                                                style:UIBarButtonItemStylePlain
+                                               target:self
+                                               action:@selector(verticalScollingButtonTapped:)];
+    } else if ([buttonString isEqualToString:@"timerButton"]) {
+        UIImage *img;
+        if (@available(iOS 13.0, *)) {
+            img = [UIImage systemImageNamed:@"timer"];
+        } else {
+            img = [UIImage imageNamed:@"glasses_icon"];
+        }
+
+        return [[UIBarButtonItem alloc] initWithImage:img
+                                                style:UIBarButtonItemStylePlain
+                                               target:self
+                                               action:@selector(timerButtonTapped:)];
     }
+    
     return nil;
 }
 

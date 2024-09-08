@@ -121,7 +121,11 @@ export default class App extends Component<Props> {
         setStampImageData={this.setStampImageData}
         openOutlineList={true}
         bottomToolbarEnabled={true}
-        bottomToolbar={[Config.Buttons.reflowButton, Config.Buttons.glasses]}
+        bottomToolbar={[
+          Config.Buttons.verticalScrollingButton,
+          Config.Buttons.glasses,
+          Config.Buttons.timerButton,
+        ]}
         onBottomTabItemPressed={({id}) => {
           console.log('bt', id);
         }}

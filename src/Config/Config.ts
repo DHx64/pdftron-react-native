@@ -63,6 +63,8 @@ export const Config = {
 
     // Extra Buttons for bottom tab
     glasses: "glassesButton",
+    verticalScrollingButton: "verticalScrollingButton",
+    timerButton: "timerButton",
   },
 
   // Tools define the various kinds of tools for the viewer
