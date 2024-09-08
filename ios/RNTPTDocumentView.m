@@ -5597,6 +5597,12 @@ NS_ASSUME_NONNULL_END
     return nil;
 }
 
+- (void)glassesButtonTapped:(id)sender {
+    // Handle glasses button tap
+    NSLog(@"Glasses button tapped");
+    // Add your custom logic here
+}
+
 - (UIBarButtonItem *)itemForButton:(NSString *)buttonString
                   inViewController:(PTDocumentBaseViewController *)documentViewController
 {
@@ -5614,6 +5620,19 @@ NS_ASSUME_NONNULL_END
         return documentViewController.shareButtonItem;
     } else if ([buttonString isEqualToString:PTViewControlsButtonKey]) {
         return documentViewController.settingsButtonItem;
+    } else if ([buttonString isEqualToString:@"glassesButton"]) {
+        UIImage *glassesImage;
+                if (@available(iOS 13.0, *)) {
+                    glassesImage = [UIImage systemImageNamed:@"eyeglasses"];
+                } else {
+                    glassesImage = [UIImage imageNamed:@"glasses_icon"];
+                }
+                
+                UIBarButtonItem *glassesButton = [[UIBarButtonItem alloc] initWithImage:glassesImage
+                                                                                  style:UIBarButtonItemStylePlain
+                                                                                 target:self
+                                                                                 action:@selector(glassesButtonTapped:)];
+                return glassesButton;
     }
     return nil;
 }
